@@ -1,0 +1,19 @@
+{
+  "name": "dance-org-site",
+  "version": "1.0.0",
+  "description": "## 💻 How to Run",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "json2csv": "^6.0.0-alpha.2",
+    "mustache-express": "^1.3.2",
+    "nedb": "^1.8.0"
+  }
+}
