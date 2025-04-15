@@ -1,0 +1,8 @@
+<h2>{{course.name}}</h2>
+<p>{{course.description}}</p>
+<form method="POST" action="/enrol">
+  <input type="hidden" name="courseId" value="{{course._id}}">
+  <label>Name: <input name="name"></label><br>
+  <label>Email: <input name="email" type="email"></label><br>
+  <button type="submit">Enrol</button>
+</form>

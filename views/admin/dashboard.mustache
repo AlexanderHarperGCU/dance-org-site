@@ -1,0 +1,19 @@
+<h2>Admin Dashboard</h2>
+<h3>Add Course</h3>
+<form method="POST" action="/admin/add-course">
+  <input name="name" placeholder="Course Name"><br>
+  <input name="duration" placeholder="Duration"><br>
+  <textarea name="description" placeholder="Description"></textarea><br>
+  <button type="submit">Add Course</button>
+</form>
+
+<h3>Existing Courses</h3>
+{{#courses}}
+  <div>
+    <strong>{{name}}</strong> ({{duration}})
+    <form method="POST" action="/admin/delete-course" style="display:inline;">
+      <input type="hidden" name="id" value="{{_id}}">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+{{/courses}}
