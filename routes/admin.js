@@ -1,9 +1,8 @@
-module.exports = (coursesDB) => {
+module.exports = (coursesDB, bookingsDB) => {
   const express = require('express');
   const router = express.Router();
   const Datastore = require('nedb');
   const organisersDB = new Datastore({ filename: './data/organisers.db', autoload: true });
-  const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
 
   organisersDB.count({}, (err, count) => {
     if (!err && count === 0) {

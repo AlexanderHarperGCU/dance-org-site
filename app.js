@@ -33,8 +33,8 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', path.join(__dirname, 'views'));
 
-const publicRoutes = require('./routes/public')(coursesDB);
-const adminRoutes = require('./routes/admin')(coursesDB);
+const publicRoutes = require('./routes/public')(coursesDB, bookingsDB);
+const adminRoutes = require('./routes/admin')(coursesDB, bookingsDB);
 
 app.use('/', publicRoutes);
 app.use('/admin', adminRoutes);
