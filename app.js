@@ -6,8 +6,7 @@ const session = require('express-session');
 const Datastore = require('nedb');
 const { Parser } = require('json2csv');
 
-const dataDir = process.env.DATA_DIR || path.join(__dirname, 'data');
-
+const dataDir = process.env.DATA_DIR || '/tmp/data';
 fs.mkdirSync(dataDir, { recursive: true });
 
 const bookingsDB = new Datastore({
