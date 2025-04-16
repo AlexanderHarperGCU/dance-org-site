@@ -5,8 +5,16 @@ const path = require('path');
 const Datastore = require('nedb');
 const { Parser } = require('json2csv');
 
-const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
-const coursesDB = new Datastore({ filename: './data/courses.db', autoload: true });
+const dataDir = process.env.DATA_DIR || path.join(__dirname, 'data');
+
+const bookingsDB = new Datastore({
+  filename: path.join(dataDir, 'bookings.db'),
+  autoload:  true
+});
+const coursesDB = new Datastore({
+  filename: path.join(dataDir, 'courses.db'),
+  autoload:  true
+});
 
 const app = express();
 
@@ -28,9 +36,9 @@ const adminRoutes = require('./routes/admin')(coursesDB);
 app.use('/', publicRoutes);
 app.use('/admin', adminRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.get('/admin/export/:courseId', (req, res) => {
