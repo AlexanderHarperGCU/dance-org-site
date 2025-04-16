@@ -39,9 +39,9 @@ const adminRoutes = require('./routes/admin')(coursesDB);
 app.use('/', publicRoutes);
 app.use('/admin', adminRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.get('/admin/export/:courseId', (req, res) => {
