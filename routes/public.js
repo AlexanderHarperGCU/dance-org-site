@@ -25,7 +25,7 @@ router.post('/enrol', (req, res) => {
 
   bookingsDB.insert({ name, email, courseId }, err => {
     if (err) return res.status(500).send('Something went wrong.');
-    res.render('enrolment');
+    res.render('enrollment');
   });
 });
 
