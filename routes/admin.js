@@ -44,6 +44,30 @@ module.exports = (coursesDB) => {
     coursesDB.remove({ _id: req.body.id }, {}, () => res.redirect('/admin/dashboard'));
   });
 
+  router.get('/edit-course/:id', (req, res) => {
+    if (!req.session.loggedIn) return res.redirect('/admin/login');
+    coursesDB.findOne({ _id: req.params.id }, (err, course) => {
+      if (err || !course) return res.redirect('/admin/dashboard');
+      res.render('admin/edit', { course });
+    });
+  });
+  
+  router.post('/edit-course/:id', (req, res) => {
+    const updated = {
+      name:        req.body.name,
+      duration:    req.body.duration,
+      description: req.body.description,
+      location:    req.body.location,
+      date:        req.body.date,
+      time:        req.body.time,
+      price:       parseFloat(req.body.price) || 0,
+      upcoming:    req.body.upcoming === 'on'
+    };
+    coursesDB.update({ _id: req.params.id }, { $set: updated }, {}, () => {
+      res.redirect('/admin/dashboard');
+    });
+  });
+
   router.get('/logout', (req, res) => {
     req.session.destroy(() => {
       res.redirect('/');

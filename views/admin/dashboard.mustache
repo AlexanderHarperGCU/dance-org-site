@@ -58,12 +58,13 @@
           <h5 class="mb-1">{{name}}</h5>
           <p class="mb-0 text-muted">Duration: {{duration}}</p>
         </div>
-        <div class="btn-group">
-          <form method="POST" action="/admin/delete-course">
+        <div class="d-flex gap-2">
+          <a href="/admin/export/{{_id}}" class="btn btn-success btn-sm">Export CSV</a>
+          <a href="/admin/edit-course/{{_id}}" class="btn btn-secondary btn-sm">Edit</a>
+          <form method="POST" action="/admin/delete-course" style="margin:0;">
             <input type="hidden" name="id" value="{{_id}}">
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>
-          <a href="/admin/export/{{_id}}" class="btn btn-success btn-sm">Export CSV</a>
         </div>
       </div>
     </div>
