@@ -39,5 +39,11 @@ module.exports = (coursesDB) => {
     coursesDB.remove({ _id: req.body.id }, {}, () => res.redirect('/admin/dashboard'));
   });
 
+  router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+      res.redirect('/');
+    });
+  });
+
   return router;
 };
