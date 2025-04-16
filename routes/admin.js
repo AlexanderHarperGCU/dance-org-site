@@ -1,6 +1,15 @@
 module.exports = (coursesDB) => {
   const express = require('express');
   const router = express.Router();
+  const Datastore = require('nedb');
+  const organisersDB = new Datastore({ filename: './data/organisers.db', autoload: true });
+  const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
+
+  organisersDB.count({}, (err, count) => {
+    if (!err && count === 0) {
+      organisersDB.insert({ username: 'admin', password: 'pass' });
+    }
+  });
 
   router.get('/login', (req, res) => {
     if (req.session && req.session.loggedIn) {
@@ -11,14 +20,16 @@ module.exports = (coursesDB) => {
 
   router.post('/login', (req, res) => {
     const { username, password } = req.body;
-    if (username === 'admin' && password === 'pass') {
-      req.session.loggedIn = true;
-      res.redirect('/admin/dashboard');
-    } else {
-      res.send('Invalid login');
-    }
+    organisersDB.findOne({ username, password }, (err, org) => {
+      if (org) {
+        req.session.loggedIn = true;
+        res.redirect('/admin/dashboard');
+      } else {
+        res.render('admin/login', { error: 'Invalid credentials' });
+      }
+    });
   });
-
+  
   router.get('/dashboard', (req, res) => {
     if (!req.session.loggedIn) return res.redirect('/admin/login');
     coursesDB.find({}, (err, courses) => {
@@ -71,6 +82,45 @@ module.exports = (coursesDB) => {
   router.get('/logout', (req, res) => {
     req.session.destroy(() => {
       res.redirect('/');
+    });
+  });
+
+  router.get('/organisers', (req, res) => {
+    if (!req.session.loggedIn) return res.redirect('/admin/login');
+    organisersDB.find({}, (err, orgs) => {
+      res.render('admin/organisers', { organisers: orgs });
+    });
+  });
+  
+  router.post('/organisers/add', (req, res) => {
+    organisersDB.insert({
+      username: req.body.username,
+      password: req.body.password
+    }, () => res.redirect('/admin/organisers'));
+  });
+ 
+  router.post('/organisers/delete', (req, res) => {
+    organisersDB.remove({ _id: req.body.id }, {}, () => res.redirect('/admin/organisers'));
+  });
+
+  router.get('/classlist/:courseId', (req, res) => {
+    if (!req.session.loggedIn) return res.redirect('/admin/login');
+    const courseId = req.params.courseId;
+  
+    bookingsDB.find({ courseId }, (err, participants) => {
+      coursesDB.findOne({ _id: courseId }, (err2, course) => {
+        res.render('admin/classlist', {
+          courseName: course.name,
+          courseId,
+          participants
+        });
+      });
+    });
+  });
+  
+  router.post('/classlist/remove', (req, res) => {
+    bookingsDB.remove({ _id: req.body.id }, {}, () => {
+      res.redirect(`/admin/classlist/${req.body.courseId}`);
     });
   });
 
