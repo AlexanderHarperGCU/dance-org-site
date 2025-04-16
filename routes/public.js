@@ -1,9 +1,6 @@
-module.exports = (coursesDB) => {
+module.exports = (coursesDB, bookingsDB) => {
   const express = require('express');
   const router = express.Router();
-  const Datastore = require('nedb');
-
-  const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
 
   router.get('/', (req, res) => {
     res.render('index');
