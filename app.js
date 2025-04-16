@@ -2,7 +2,10 @@ const express = require('express');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
 const path = require('path');
+const Datastore = require('nedb');
 const { Parser } = require('json2csv');
+
+const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
 
 const app = express();
 
@@ -28,6 +31,7 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
 
 app.get('/admin/export/:courseId', (req, res) => {
   const courseId = req.params.courseId;
