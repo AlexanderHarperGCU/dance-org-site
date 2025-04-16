@@ -34,6 +34,7 @@ module.exports = (coursesDB) => {
       location: req.body.location,
       date: req.body.date,
       time: req.body.time,
+      price: parseFloat(req.body.price) || 0,
       upcoming: req.body.upcoming === 'on' 
     };
     coursesDB.insert(course, () => res.redirect('/admin/dashboard'));
