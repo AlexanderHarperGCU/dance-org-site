@@ -1,12 +1,23 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
-const path = require('path');
 const Datastore = require('nedb');
 const { Parser } = require('json2csv');
 
-const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
-const coursesDB = new Datastore({ filename: './data/courses.db', autoload: true });
+const dataDir = process.env.DATA_DIR || path.join(__dirname, 'data');
+
+fs.mkdirSync(dataDir, { recursive: true });
+
+const bookingsDB = new Datastore({
+  filename: path.join(dataDir, 'bookings.db'),
+  autoload: true
+});
+const coursesDB = new Datastore({
+  filename: path.join(dataDir, 'courses.db'),
+  autoload: true
+});
 
 const app = express();
 
