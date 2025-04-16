@@ -6,6 +6,7 @@ const Datastore = require('nedb');
 const { Parser } = require('json2csv');
 
 const bookingsDB = new Datastore({ filename: './data/bookings.db', autoload: true });
+const coursesDB = new Datastore({ filename: './data/courses.db', autoload: true });
 
 const app = express();
 
@@ -21,8 +22,8 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', path.join(__dirname, 'views'));
 
-const publicRoutes = require('./routes/public');
-const adminRoutes = require('./routes/admin');
+const publicRoutes = require('./routes/public')(coursesDB);
+const adminRoutes = require('./routes/admin')(coursesDB);
 
 app.use('/', publicRoutes);
 app.use('/admin', adminRoutes);
