@@ -1,20 +1,48 @@
-<h2>Admin Dashboard</h2>
-<h3>Add Course</h3>
-<form method="POST" action="/admin/add-course">
-  <input name="name" placeholder="Course Name"><br>
-  <input name="duration" placeholder="Duration"><br>
-  <textarea name="description" placeholder="Description"></textarea><br>
-  <button type="submit">Add Course</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
 
-<h3>Existing Courses</h3>
-{{#courses}}
-  <div>
-    <strong>{{name}}</strong> ({{duration}})
-    <form method="POST" action="/admin/delete-course" style="display:inline;">
-      <input type="hidden" name="id" value="{{_id}}">
-      <button type="submit">Delete</button>
-    </form>
-    <a href="/admin/export/{{_id}}" class="btn btn-success btn-sm">Export Class List (CSV)</a>
+    <div class="card p-4 mb-5 shadow-sm">
+      <h3 class="mb-3">Add New Course</h3>
+      <form method="POST" action="/admin/add-course">
+        <div class="mb-3">
+          <input name="name" class="form-control" placeholder="Course Name">
+        </div>
+        <div class="mb-3">
+          <input name="duration" class="form-control" placeholder="Duration">
+        </div>
+        <div class="mb-3">
+          <textarea name="description" class="form-control" placeholder="Description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Course</button>
+      </form>
+    </div>
+
+    <h3>Existing Courses</h3>
+    {{#courses}}
+    <div class="card mb-3 p-3 shadow-sm">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-1">{{name}}</h5>
+          <p class="mb-0 text-muted">Duration: {{duration}}</p>
+        </div>
+        <div class="btn-group">
+          <form method="POST" action="/admin/delete-course">
+            <input type="hidden" name="id" value="{{_id}}">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+          <a href="/admin/export/{{_id}}" class="btn btn-success btn-sm">Export CSV</a>
+        </div>
+      </div>
+    </div>
+    {{/courses}}
   </div>
-{{/courses}}
+</body>
+</html>
