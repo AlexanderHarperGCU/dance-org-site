@@ -32,7 +32,6 @@ app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
-
 app.get('/admin/export/:courseId', (req, res) => {
   const courseId = req.params.courseId;
 
