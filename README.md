@@ -26,6 +26,19 @@ Or, for automatic restarts on code changes:
 4. Visit: `http://localhost:3000`
    Admin: `http://localhost:3000/admin/login`
 
+5. Live Demo Site:
+   ```
+   Visit: `https://dance-org-site.onrender.com`
+
+   Note: The live version of this website hosted at
+         https://dance-org-site.onrender.com
+         uses temporary, in-memory storage (/tmp directory) due to limitations of the Render Free Tier.
+
+         As a result:
+
+         All data (courses, bookings, organiser accounts) is reset each time the server restarts or is redeployed
+   ```
+
 ## ✅ Features Implemented
 
 - Public users can:
