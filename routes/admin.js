@@ -30,7 +30,10 @@ module.exports = (coursesDB) => {
     const course = {
       name: req.body.name,
       duration: req.body.duration,
-      description: req.body.description
+      description: req.body.description,
+      location: req.body.location,
+      date: req.body.date,
+      time: req.body.time
     };
     coursesDB.insert(course, () => res.redirect('/admin/dashboard'));
   });
