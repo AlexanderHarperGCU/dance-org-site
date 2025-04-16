@@ -4,6 +4,9 @@ const Datastore = require('nedb');
 const coursesDB = new Datastore({ filename: './data/courses.db', autoload: true });
 
 router.get('/login', (req, res) => {
+  if (req.session && req.session.loggedIn) {
+    return res.redirect('/admin/dashboard');
+  }
   res.render('admin/login');
 });
 
