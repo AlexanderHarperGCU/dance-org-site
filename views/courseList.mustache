@@ -31,6 +31,22 @@
     {{^courses}}
       <p class="text-muted">No courses available at the moment. Please check back soon.</p>
     {{/courses}}
+
+    <h3 class="mt-5">Upcoming Courses</h3>
+
+    {{#upcomingCourses}}
+      <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title">{{name}}</h4>
+          <p class="card-text">
+            {{#date}}<strong>Date:</strong> {{date}} at {{time}}<br>{{/date}}
+            {{#location}}<strong>Location:</strong> {{location}}<br>{{/location}}
+            <strong>Duration:</strong> {{duration}}<br>
+            {{#description}}<strong>Description:</strong> {{description}}<br>{{/description}}
+          <a href="/course/{{_id}}" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    {{/upcomingCourses}}
   </div>
 </body>
 </html>

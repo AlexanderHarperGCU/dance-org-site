@@ -10,9 +10,17 @@ module.exports = (coursesDB) => {
   });
 
   router.get('/courses', (req, res) => {
-    coursesDB.find({}, (err, courses) => {
-      res.render('courseList', { courses });
-    });
+    coursesDB.find({}, (err, all) => {
+      if (err) return res.sendStatus(500);
+  
+      const upcomingCourses = all.filter(c => c.upcoming);
+      const currentCourses  = all.filter(c => !c.upcoming);
+  
+      res.render('courseList', {
+        courses:      currentCourses,
+        upcomingCourses
+      });
+    });  
   });
 
   router.get('/course/:id', (req, res) => {

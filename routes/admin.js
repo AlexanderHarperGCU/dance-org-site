@@ -33,7 +33,8 @@ module.exports = (coursesDB) => {
       description: req.body.description,
       location: req.body.location,
       date: req.body.date,
-      time: req.body.time
+      time: req.body.time,
+      upcoming: req.body.upcoming === 'on' 
     };
     coursesDB.insert(course, () => res.redirect('/admin/dashboard'));
   });
